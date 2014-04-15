@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -e
+
+chown -R git:git /srv/gitorious/app/log /srv/gitorious/app/tmp
+
+mkdir -p /srv/gitorious/config
+
+if [[ ! -e /srv/gitorious/config/gitorious.yml ]]; then
+    cp /srv/gitorious/templates/gitorious.yml /srv/gitorious/config/gitorious.yml
+fi
+
+if [[ ! -e /srv/gitorious/config/database.yml ]]; then
+    cp /srv/gitorious/templates/database.yml /srv/gitorious/config/database.yml
+fi
+
+if [[ ! -e /srv/gitorious/config/smtp.yml ]]; then
+    cp /srv/gitorious/templates/smtp.yml /srv/gitorious/config/smtp.yml
+fi
+
+if [[ ! -e /srv/gitorious/config/authentication.yml ]]; then
+    cp /srv/gitorious/templates/authentication.yml /srv/gitorious/config/authentication.yml
+fi
+
+chown -R git:git /srv/gitorious/config
+
+mkdir -p /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache
+chown git:git /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache
+
+cd /srv/gitorious/app && exec sudo -E -H -u git "$@"
