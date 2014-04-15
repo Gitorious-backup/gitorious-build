@@ -15,6 +15,7 @@ docker pull gitorious/git-daemon
 docker pull gitorious/app
 docker pull gitorious/nginx
 docker pull gitorious/sphinx
+docker pull gitorious/postfix
 
 # create data only container that exits immediately, with config and data volumes mapped to host
 docker run --name data -v /etc/gitorious:/srv/gitorious/config -v /var/lib/gitorious:/srv/gitorious/data ubuntu:12.10 true
