@@ -47,6 +47,8 @@ RUN apt-get -y install nodejs
 
 RUN su git -c "git submodule update --recursive --init && bundle exec rake assets:precompile"
 
+RUN su git -c "git fetch -q && git checkout 54cb097"
+
 # copy configs and scripts into the image
 ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
 ADD config/resque.yml /srv/gitorious/app/config/resque.yml

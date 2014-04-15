@@ -3,11 +3,8 @@
 # The following configuration uses the embedded Postfix instance. Feel free to
 # change it to your own SMTP server address.
 
-# NOTE: "localhost" refers to the container. If you want to use container's host
-# machine as SMTP address then use IP address or FQDN instead.
-
-address: localhost
-port: 25
+address: <%= ENV['SMTP_PORT_25_TCP_ADDR'] || 'localhost' %>
+port: <%= ENV['SMTP_PORT_25_TCP_PORT'] || 25 %>
 openssl_verify_mode: none
 
 # Example Gmail configuration:
