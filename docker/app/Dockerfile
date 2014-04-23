@@ -60,7 +60,6 @@ ADD run /usr/local/bin/run
 
 EXPOSE 3000
 VOLUME ["/srv/gitorious/app/log"]
-VOLUME ["/srv/gitorious/app/tmp"]
 VOLUME ["/srv/gitorious/config"]
 
 ENTRYPOINT ["/usr/local/bin/run"]
