@@ -35,7 +35,7 @@
 #
 scheme: http
 host: localhost # <- replace this with your FQDN, i.e. gitorious.company.com
-port: 7080
+port: 80
 
 # Host for pulling and pushing over SSH. The full SSH URLs will
 # include the name of the Gitorious user (as configured elsewhere in
@@ -81,7 +81,7 @@ ssh_daemon_port: 7022
 # disable HTTP and git:// cloning. These protocols are anonymous, and
 # will allow unregistered users to pull repositories, given that they
 # somehow obtained the correct URLs.
-#public_mode: true
+public_mode: false
 
 # By setting this to false, you effectively disable new user
 # registrations, regardless of public mode on/off. (Defaults to true
@@ -94,7 +94,7 @@ ssh_daemon_port: 7022
 # limit who can browse and pull from individual repositories and/or
 # projects. More information is available in the Gitorious Wiki:
 # https://gitorious.org/gitorious/pages/PrivateRepositories
-#enable_private_repositories: false
+enable_private_repositories: true
 
 # New projects default to being private
 #projects_default_private: false
@@ -123,6 +123,11 @@ ssh_daemon_port: 7022
 # point. Feel free to contribute translations.
 #locale: en
 
+# Super group makes all the repositories available for registered
+# user. It automatically adds a SuperGroup, that contains everyone,
+# to every project.
+#enable_super_group: false
+
 # The (optional name and) address used when sending emails. This
 # defaults to "Gitorious <no-reply@<host>>. Can be set to an email
 # address only, or Name <address>.
@@ -135,6 +140,12 @@ ssh_daemon_port: 7022
 # using ldap information to grant access to particular views such as
 # projects, teams or users once a user is already authenticated.
 #enable_ldap_authorization: true
+
+# Gitorious doesn't list LDAP group members on the team pages by default.
+# If you want to list all the group members set the following setting to true,
+# but keep in mind that if groups at your organization are big (hundreds or
+# thousands members) the team pages may load very slow.
+#enable_ldap_group_member_listing: false
 
 # Gitorious throttles the rate at which users can create database
 # records (repositories, projects, messages..) Users can only create X
@@ -273,7 +284,7 @@ ssh_daemon_port: 7022
 
 # Email address to the support for the Gitorious server. Default is
 # gitorious-support@<host>
-#support_email: gitorious-support@gitorious.local
+support_email: support@gitorious.here
 
 # Mangle visible e-mail addresses (spam protection)
 #mangle_email_addresses: true
@@ -373,7 +384,7 @@ ssh_daemon_port: 7022
 #########################################################################
 
 # Is this gitorious.org? Read: should we have a very flashy homepage?
-#is_gitorious_dot_org: true
+#is_gitorious_dot_org: false
 
 # Stuff that's in the html <head>. custom stats javascript code etc
 #extra_html_head_data:
