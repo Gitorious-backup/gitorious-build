@@ -2,11 +2,11 @@
 
 A docker image including Redis 2.8, based on Ubuntu 14.04 LTS.
 
-## Ports
+## Exported ports
 
 * 6379 (redis-server)
 
-## Volumes
+## Exported volumes
 
 * `/var/lib/redis` - `dump.rdb` is stored in it,
 * `/var/log/redis` - daemon logs.
