@@ -1,4 +1,4 @@
-FROM ubuntu:12.10
+FROM ubuntu:14.04
 MAINTAINER Marcin Kulik
 
 ENV DEBIAN_FRONTEND noninteractive

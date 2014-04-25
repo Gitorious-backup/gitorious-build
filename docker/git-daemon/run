@@ -2,4 +2,4 @@
 
 mkdir -p /srv/gitorious/data/repositories
 
-exec sudo -u daemon /usr/bin/git daemon --listen=0.0.0.0 --export-all --base-path=/srv/gitorious/data/repositories --verbose --reuseaddr /srv/gitorious/data/repositories
+exec sudo -u gitdaemon /usr/bin/git daemon --listen=0.0.0.0 --export-all --base-path=/srv/gitorious/data/repositories --verbose --reuseaddr /srv/gitorious/data/repositories
