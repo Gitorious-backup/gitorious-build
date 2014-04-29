@@ -20,7 +20,7 @@ RUN apt-get -y install ruby ruby-dev rake git
 RUN mkdir /srv/gitorious && chown git:git /srv/gitorious
 
 # checkout and build the app in /srv/gitorious/app
-RUN sudo -u git git clone git://gitorious.org/gitorious/mainline.git /srv/gitorious/app
+RUN su git -c "git clone git://gitorious.org/gitorious/mainline.git /srv/gitorious/app"
 
 # install bundler
 RUN gem install bundler --no-rdoc --no-ri
@@ -48,6 +48,8 @@ RUN apt-get -y install nodejs
 RUN su git -c "git submodule update --recursive --init && bundle exec rake assets:precompile"
 
 RUN su git -c "git fetch -q && git checkout 54cb097"
+
+RUN apt-get -y install sudo
 
 # copy configs and scripts into the image
 ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
