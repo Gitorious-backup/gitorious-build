@@ -49,7 +49,7 @@ port: 80
 # allowed to clone over SSH.
 #enable_ssh_daemon: true
 #ssh_daemon_host: gitorious.local
-ssh_daemon_port: 7022
+ssh_daemon_port: 22
 
 # Host and port used to reach the Gitorious git-daemon. Note that the
 # git-daemon service must be run separately from Gitorious. See
