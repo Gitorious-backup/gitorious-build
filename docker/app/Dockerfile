@@ -40,6 +40,8 @@ RUN ln -s /srv/gitorious/config/database.yml /srv/gitorious/app/config/; \
 
 RUN su git -c "git submodule update --recursive --init && bundle exec rake assets:precompile"
 
+RUN apt-get install -y rsync
+
 # copy configs and scripts into the image
 ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
 ADD config/resque.yml /srv/gitorious/app/config/resque.yml

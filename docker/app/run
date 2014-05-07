@@ -29,8 +29,8 @@ chown git:git /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work
 
 export GITORIOUS_AUTHORIZED_KEYS_PATH="/srv/gitorious/data/.ssh/authorized_keys"
 
-rm -rf /srv/gitorious/assets/*
-cp -r /srv/gitorious/app/public/* /srv/gitorious/assets/
-chown -R git:git /srv/gitorious/assets/*
+mkdir -p /srv/gitorious/assets
+rsync -a --delete /srv/gitorious/app/public/ /srv/gitorious/assets/
+chown -R git:git /srv/gitorious/assets
 
 cd /srv/gitorious/app && exec sudo -E -H -u git "$@"
