@@ -10,6 +10,7 @@ RUN mkdir -p /home/git/.ssh && chown -R git:git /home/git/.ssh && chmod 0700 /ho
 
 # setup /usr/bin/gitorious so it executes bin/gitorious from the app dir
 RUN ln -s /srv/gitorious/app/bin/gitorious /usr/bin/gitorious
+RUN echo "PermitUserEnvironment yes" >> /etc/ssh/sshd_config
 
 ADD run /usr/local/bin/run
 

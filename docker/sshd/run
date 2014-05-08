@@ -1,5 +1,6 @@
 #!/bin/sh
 
 sudo -u git cp /srv/gitorious/data/.ssh/git_id_rsa.pub /home/git/.ssh/authorized_keys
+su git -c "env | grep _PORT_ > /home/git/.ssh/environment"
 
 exec /usr/sbin/sshd -D
