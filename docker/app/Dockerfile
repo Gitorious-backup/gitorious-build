@@ -14,7 +14,7 @@ RUN useradd -m -d /home/git -u 5000 -U git
 # RUN echo exit 101 > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
 
 # install required packages
-RUN apt-get -y install ruby ruby-dev rake git build-essential \
+RUN apt-get -y install ruby ruby-dev rake git build-essential rsync \
                        libmysqlclient-dev libxml2-dev libxslt1-dev \
                        libreadline6 libicu-dev imagemagick nodejs sudo
 
@@ -39,8 +39,6 @@ RUN ln -s /srv/gitorious/config/database.yml /srv/gitorious/app/config/; \
     ln -s /srv/gitorious/config/authentication.yml /srv/gitorious/app/config/
 
 RUN su git -c "git submodule update --recursive --init && bundle exec rake assets:precompile"
-
-RUN apt-get install -y rsync
 
 # copy configs and scripts into the image
 ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
