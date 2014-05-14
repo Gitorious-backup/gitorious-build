@@ -21,16 +21,19 @@ RUN apt-get -y install ruby ruby-dev rake git build-essential rsync \
 # create dir for the app and docker's files
 RUN mkdir /srv/gitorious && chown git:git /srv/gitorious
 
-# checkout and build the app in /srv/gitorious/app
+# clone app repository into /srv/gitorious/app
 RUN su git -c "git clone --depth 10 git://gitorious.org/gitorious/mainline.git /srv/gitorious/app"
+
+WORKDIR /srv/gitorious/app
+
+# checkout specific commit
+RUN su git -c "git checkout -b deploy 61bb2b0"
 
 # install bundler
 RUN gem install bundler --no-rdoc --no-ri
 
 # checkout source code and bundle
-RUN su git -c "cd /srv/gitorious/app && bundle install --deployment --without postgres"
-
-WORKDIR /srv/gitorious/app
+RUN su git -c "bundle install --deployment --without postgres"
 
 # symlink external (exposed) config files
 RUN ln -s /srv/gitorious/config/database.yml /srv/gitorious/app/config/; \
