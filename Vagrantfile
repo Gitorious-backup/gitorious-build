@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
 
   config.vm.network :forwarded_port, guest: 80, host: 7080
-  config.vm.network :forwarded_port, guest: 7022, host: 7022
+  config.vm.network :forwarded_port, guest: 22, host: 7022
   config.vm.network :forwarded_port, guest: 9418, host: 9418
 
   config.vm.provider :virtualbox do |v, override|
