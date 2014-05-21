@@ -44,8 +44,8 @@ RUN ln -s /srv/gitorious/config/database.yml /srv/gitorious/app/config/; \
 # build assets
 RUN su git -c "git submodule update --recursive --init && bundle exec rake assets:precompile"
 
-# put revision (git sha) into public/REVISION
-RUN su git -c "git rev-parse HEAD >public/REVISION"
+# put revision (git sha) and version (tag + sha) into public/
+RUN su git -c "git rev-parse HEAD >public/REVISION && git describe --tags HEAD >public/VERSION"
 
 # copy configs and scripts into the image
 ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
