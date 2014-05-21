@@ -3,7 +3,7 @@ MAINTAINER Marcin Kulik
 
 RUN apt-get -y install sphinxsearch
 
-ADD run /usr/local/bin/run
+ADD run-sphinx /usr/local/bin/run-sphinx
 
 EXPOSE 9306
 EXPOSE 9312
