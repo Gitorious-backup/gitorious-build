@@ -47,6 +47,9 @@ RUN su git -c "git submodule update --recursive --init && bundle exec rake asset
 # put revision (git sha) and version (tag + sha) into public/
 RUN su git -c "git rev-parse HEAD >public/REVISION && git describe --tags HEAD >public/VERSION"
 
+# symlink uploads
+RUN ln -ns /srv/gitorious/data/uploads /srv/gitorious/app/public/system && chown -h git:git /srv/gitorious/app/public/system
+
 # copy configs and scripts into the image
 ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
 ADD config/resque.yml /srv/gitorious/app/config/resque.yml

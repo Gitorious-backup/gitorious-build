@@ -24,8 +24,8 @@ fi
 
 chown -R git:git /srv/gitorious/config
 
-mkdir -p /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache
-chown git:git /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache
+mkdir -p /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache /srv/gitorious/data/uploads
+chown git:git /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache /srv/gitorious/data/uploads
 
 export GITORIOUS_AUTHORIZED_KEYS_PATH="/srv/gitorious/data/.ssh/authorized_keys"
 
