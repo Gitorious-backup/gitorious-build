@@ -3,4 +3,7 @@
 sudo -u git cp /srv/gitorious/data/.ssh/git_id_rsa.pub /home/git/.ssh/authorized_keys
 su git -c "env | grep _PORT_ > /home/git/.ssh/environment"
 
+ln -nfs /srv/gitorious/app/data/hooks /srv/gitorious/data/repositories/.hooks
+chown -h git:git /srv/gitorious/data/repositories/.hooks
+
 exec /usr/sbin/sshd -D
