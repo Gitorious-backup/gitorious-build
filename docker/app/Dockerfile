@@ -16,18 +16,19 @@ RUN useradd -m -d /home/git -u 5000 -U git
 # install required packages
 RUN apt-get -y install ruby ruby-dev rake git build-essential rsync \
                        libmysqlclient-dev libxml2-dev libxslt1-dev \
-                       libreadline6 libicu-dev imagemagick nodejs sudo
+                       libreadline6 libicu-dev imagemagick nodejs sudo \
+                       mysql-client
 
 # create dir for the app and docker's files
 RUN mkdir /srv/gitorious && chown git:git /srv/gitorious
 
 # clone app repository into /srv/gitorious/app
-RUN su git -c "git clone --depth 10 git://gitorious.org/gitorious/mainline.git /srv/gitorious/app"
+RUN su git -c "git clone git://gitorious.org/gitorious/mainline.git /srv/gitorious/app"
 
 WORKDIR /srv/gitorious/app
 
 # checkout specific commit
-RUN su git -c "git checkout -b deploy 61bb2b0"
+RUN su git -c "git checkout -b deploy 184607b"
 
 # install bundler
 RUN gem install bundler --no-rdoc --no-ri
