@@ -28,19 +28,16 @@ RUN su git -c "git clone git://gitorious.org/gitorious/mainline.git /srv/gitorio
 WORKDIR /srv/gitorious/app
 
 # checkout specific commit
-RUN su git -c "git checkout -b deploy 184607b"
+RUN su git -c "git checkout -b deploy 0654ac0"
 
 # install bundler
 RUN gem install bundler --no-rdoc --no-ri
 
+# install tools required for compiling rugged gem's native exts
+RUN apt-get -y install cmake pkg-config
+
 # checkout source code and bundle
 RUN su git -c "bundle install --deployment --without postgres"
-
-# symlink external (exposed) config files
-RUN ln -s /srv/gitorious/config/database.yml /srv/gitorious/app/config/; \
-    ln -s /srv/gitorious/config/gitorious.yml /srv/gitorious/app/config/; \
-    ln -s /srv/gitorious/config/smtp.yml /srv/gitorious/app/config/; \
-    ln -s /srv/gitorious/config/authentication.yml /srv/gitorious/app/config/
 
 # build assets
 RUN su git -c "git submodule update --recursive --init && bundle exec rake assets:precompile"
@@ -51,13 +48,9 @@ RUN su git -c "git rev-parse HEAD >public/REVISION && git describe --tags HEAD >
 # symlink uploads
 RUN ln -ns /srv/gitorious/data/uploads /srv/gitorious/app/public/system && chown -h git:git /srv/gitorious/app/public/system
 
-# copy configs and scripts into the image
-ADD config/gitorious.overrides.yml /srv/gitorious/app/config/gitorious.overrides.yml
-ADD config/resque.yml /srv/gitorious/app/config/resque.yml
-ADD config/memcache.yml /srv/gitorious/app/config/memcache.yml
-ADD config/thinking_sphinx.yml /srv/gitorious/app/config/thinking_sphinx.yml
-ADD config/unicorn.rb /srv/gitorious/app/config/unicorn.rb
-ADD templates /srv/gitorious/templates
+# copy internal configs into the image
+ADD config /srv/gitorious/app/config/internal
+
 ADD run /usr/local/bin/run
 
 EXPOSE 3000
