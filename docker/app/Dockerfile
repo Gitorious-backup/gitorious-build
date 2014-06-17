@@ -28,7 +28,7 @@ RUN su git -c "git clone git://gitorious.org/gitorious/mainline.git /srv/gitorio
 WORKDIR /srv/gitorious/app
 
 # checkout specific commit
-RUN su git -c "git checkout -b deploy 0654ac0"
+RUN su git -c "git fetch && git checkout -b deploy b97c197"
 
 # install bundler
 RUN gem install bundler --no-rdoc --no-ri
