@@ -7,7 +7,7 @@ INTERNAL_CONFIG_DIR=/srv/gitorious/app/config/internal
 TARGET_CONFIG_DIR=/srv/gitorious/app/config
 
 copy-config() {
-  rm $TARGET_CONFIG_DIR/$1
+  rm -f $TARGET_CONFIG_DIR/$1
 
   if [[ -e $EXTERNAL_CONFIG_DIR/$1 ]]; then
     ln -ns $EXTERNAL_CONFIG_DIR/$1 $TARGET_CONFIG_DIR/$1
