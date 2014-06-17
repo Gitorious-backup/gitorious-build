@@ -2,6 +2,13 @@
 
 set -e
 
+fqdn=$(grep '^host:' /srv/gitorious/config/gitorious.yml | awk '{ print $2 }')
+
+if [[ $fqdn != "" ]]; then
+  echo $fqdn >/etc/mailname
+  postconf -e myhostname=$fqdn
+fi
+
 /etc/init.d/postfix start
 
 while true; do sleep 100; done
