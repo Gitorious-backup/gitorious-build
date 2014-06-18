@@ -10,9 +10,6 @@ ENV RAILS_ENV production
 # add git user
 RUN useradd -m -d /home/git -u 5000 -U git
 
-# disable startup of services during image creation
-# RUN echo exit 101 > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
-
 # install required packages
 RUN apt-get -y install git build-essential rsync libmysqlclient-dev \
   libxml2-dev libxslt1-dev libreadline6 libicu-dev imagemagick nodejs sudo \
