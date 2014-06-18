@@ -14,10 +14,18 @@ RUN useradd -m -d /home/git -u 5000 -U git
 # RUN echo exit 101 > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
 
 # install required packages
-RUN apt-get -y install ruby ruby-dev rake git build-essential rsync \
-                       libmysqlclient-dev libxml2-dev libxslt1-dev \
-                       libreadline6 libicu-dev imagemagick nodejs sudo \
-                       mysql-client
+RUN apt-get -y install git build-essential rsync libmysqlclient-dev \
+  libxml2-dev libxslt1-dev libreadline6 libicu-dev imagemagick nodejs sudo \
+  mysql-client
+
+# install Ruby 2.0 and make it a default Ruby
+RUN apt-get install -y ruby2.0 ruby2.0-dev
+RUN rm /usr/bin/ruby /usr/bin/gem /usr/bin/irb /usr/bin/erb && \
+  ln -s /usr/bin/ruby2.0 /usr/bin/ruby && \
+  ln -s /usr/bin/gem2.0 /usr/bin/gem && \
+  ln -s /usr/bin/irb2.0 /usr/bin/irb && \
+  ln -s /usr/bin/erb2.0 /usr/bin/erb && \
+  gem update --system && gem pristine --all
 
 # create dir for the app and docker's files
 RUN mkdir /srv/gitorious && chown git:git /srv/gitorious
