@@ -21,4 +21,4 @@ ADD run /usr/local/bin/run
 
 EXPOSE 22
 
-CMD ["/usr/local/bin/run"]
+CMD ["/usr/sbin/sshd", "-D"]
