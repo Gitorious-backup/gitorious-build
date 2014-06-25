@@ -2,47 +2,22 @@
 
 set -e
 
-EXTERNAL_CONFIG_DIR=/srv/gitorious/config
-INTERNAL_CONFIG_DIR=/srv/gitorious/app/config/internal
-TARGET_CONFIG_DIR=/srv/gitorious/app/config
+# copy config files for Rails app
+/usr/local/bin/copy-configs
 
-copy-config() {
-  rm -f $TARGET_CONFIG_DIR/$1
+# fix ownership of "log" and "tmp" directories so Rails app can write to them
+/usr/local/bin/fix-ownerships
 
-  if [[ -e $EXTERNAL_CONFIG_DIR/$1 ]]; then
-    ln -ns $EXTERNAL_CONFIG_DIR/$1 $TARGET_CONFIG_DIR/$1
-  elif [[ -e $INTERNAL_CONFIG_DIR/$1 ]]; then
-    ln -ns $INTERNAL_CONFIG_DIR/$1 $TARGET_CONFIG_DIR/$1
-  fi
-}
+# ensure existence of repositories dir
+/usr/local/bin/create-repositories-dir
 
-# make sure git user can write into log and tmp dirs
-# (when they're mounted from the host they're initially owned by root)
-chown -R git:git /srv/gitorious/app/log /srv/gitorious/app/tmp
+# ensure existence of other data dirs
+mkdir -p /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache /srv/gitorious/data/uploads
+chown git:git /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache /srv/gitorious/data/uploads
 
-# put config files in app's config dir, favoring the external ones
-copy-config gitorious.yml
-copy-config gitorious.overrides.yml
-copy-config database.yml
-copy-config memcache.yml
-copy-config resque.yml
-copy-config smtp.yml
-copy-config authentication.yml
-copy-config thinking_sphinx.yml
-copy-config unicorn.rb
-
-# ensure existence of various data dirs
-mkdir -p /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache /srv/gitorious/data/uploads
-chown git:git /srv/gitorious/data/repositories /srv/gitorious/data/tarballs-work /srv/gitorious/data/tarballs-cache /srv/gitorious/data/uploads
-
-# tell Rails app to read/write authorized_keys file from/to data volume
+# tell Rails app to write authorized_keys file to data volume
 # (so host's sshd can access it)
 export GITORIOUS_AUTHORIZED_KEYS_PATH="/srv/gitorious/data/.ssh/authorized_keys"
-
-# copy static assets to a place which nginx container can access
-mkdir -p /srv/gitorious/assets
-rsync -a --delete /srv/gitorious/app/public/ /srv/gitorious/assets/
-chown -R git:git /srv/gitorious/assets
 
 # execute the given command as git user in app dir
 cd /srv/gitorious/app && exec sudo -E -H -u git "$@"

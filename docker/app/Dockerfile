@@ -56,6 +56,9 @@ RUN ln -ns /srv/gitorious/data/uploads /srv/gitorious/app/public/system && chown
 # copy internal configs into the image
 ADD config /srv/gitorious/app/config/internal
 
+ADD copy-configs /usr/local/bin/copy-configs
+ADD create-repositories-dir /usr/local/bin/create-repositories-dir
+ADD fix-ownerships /usr/local/bin/fix-ownerships
 ADD run /usr/local/bin/run
 
 EXPOSE 3000
